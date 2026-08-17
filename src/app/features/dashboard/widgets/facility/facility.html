@@ -1,0 +1,35 @@
+<app-ui-card
+  title="Facility"
+  subtitle="Facility overview">
+
+  <div class="facility-content">
+
+    <div class="facility-name">
+      <div class="facility-icon">
+        ⌂
+      </div>
+
+      <div>
+        <h3>{{ facility.name }}</h3>
+        <p>{{ facility.address }}</p>
+        <p>{{ facility.city }}</p>
+      </div>
+    </div>
+
+    <div class="facility-stats">
+
+      <div class="stat">
+        <strong>{{ facility.residents }}</strong>
+        <span>Residents</span>
+      </div>
+
+      <div class="stat">
+        <strong>{{ facility.daysUntilInspection }}</strong>
+        <span>Days to inspection</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</app-ui-card>

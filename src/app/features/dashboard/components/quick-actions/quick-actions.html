@@ -1,0 +1,14 @@
+<div class="quick-actions">
+
+  @for (action of actions; track action.label) {
+
+    <a
+      class="quick-action"
+      [routerLink]="action.url"
+    >
+      {{ action.label }}
+    </a>
+
+  }
+
+</div>

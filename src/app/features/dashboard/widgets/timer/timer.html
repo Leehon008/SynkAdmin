@@ -1,0 +1,35 @@
+<app-ui-card
+  title="Timer"
+  subtitle="Track your current task"
+>
+
+  <div class="timer">
+
+    <div
+      class="timer-display"
+      [class.running]="running()"
+    >
+      {{ elapsed() }}
+    </div>
+
+    <div class="timer-status">
+      @if (running()) {
+        <span class="status-dot"></span>
+        Timer running
+      } @else {
+        Ready to start
+      }
+    </div>
+
+    <button
+      class="timer-button"
+      [class.stop]="running()"
+      type="button"
+      (click)="toggleTimer()"
+    >
+      {{ running() ? 'Stop Timer' : 'Start Timer' }}
+    </button>
+
+  </div>
+
+</app-ui-card>

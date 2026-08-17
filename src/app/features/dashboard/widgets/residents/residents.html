@@ -1,0 +1,49 @@
+<app-ui-card
+  title="Residents"
+  subtitle="Active residents"
+>
+
+  <div class="residents">
+
+    @for (resident of residents; track resident.id) {
+
+      <div class="resident">
+
+        <app-ui-avatar  
+          [initials]="resident.initials"
+          size="md"
+        />  
+
+        <div class="resident-info">
+
+          <strong>
+            {{ resident.name }}
+          </strong>
+
+          <span>
+            {{ resident.room }}
+          </span>
+
+        </div>
+
+        <span
+          class="status"
+          [class.attention]="resident.status === 'Attention'"
+        >
+          {{ resident.status }}
+        </span>
+
+      </div>
+
+    }
+
+  </div>
+
+  <button
+    card-actions
+    class="view-all"
+  >
+    View all
+  </button>
+
+</app-ui-card>

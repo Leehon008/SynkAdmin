@@ -1,0 +1,12 @@
+<div
+  class="avatar"
+  [class.avatar-sm]="size === 'sm'"
+  [class.avatar-md]="size === 'md'"
+  [class.avatar-lg]="size === 'lg'"
+>
+  @if (src) {
+    <img [src]="src" [alt]="initials" />
+  } @else {
+    <span>{{ initials }}</span>
+  }
+</div>

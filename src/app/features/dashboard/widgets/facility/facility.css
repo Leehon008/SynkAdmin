@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.facility-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.facility-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.facility-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: #e1f6eb;
+  color: #008451;
+
+  font-size: 19px;
+}
+
+.facility-name h3 {
+  margin: 0 0 5px;
+
+  color: #1c2821;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.facility-name p {
+  margin: 2px 0;
+
+  color: #89928d;
+
+  font-size: 12px;
+}
+
+.facility-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  border-top: 1px solid #edf0ee;
+  padding-top: 16px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.stat + .stat {
+  padding-left: 16px;
+  border-left: 1px solid #edf0ee;
+}
+
+.stat strong {
+  color: #005a34;
+  font-size: 20px;
+}
+
+.stat span {
+  color: #89928d;
+  font-size: 11px;
+}

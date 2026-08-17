@@ -1,0 +1,166 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+
+.topbar {
+  width: 100%;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 20px;
+
+  background: #005a34;
+  color: #ffffff;
+}
+
+.topbar-left,
+.topbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-left {
+  gap: 20px;
+}
+
+.topbar-right {
+  gap: 12px;
+}
+
+.menu-button {
+  width: 30px;
+  height: 30px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+  border: 0;
+
+  background: transparent;
+  color: white;
+
+  font-size: 22px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.brand-mark {
+  color: #20c982;
+  font-size: 28px;
+}
+
+.facility {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-left: 25px;
+}
+
+.facility-icon {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #21b978;
+  color: white;
+}
+
+.facility-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.facility-info strong {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.facility-info span {
+  font-size: 10px;
+  opacity: 0.75;
+}
+
+.chevron {
+  font-size: 12px;
+}
+
+.topbar-icon {
+  width: 32px;
+  height: 32px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+  color: white;
+
+  font-size: 17px;
+}
+
+.topbar-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-left: 4px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border: 2px solid white;
+  border-radius: 50%;
+
+  background: #e1f5ec;
+  color: #005a34;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+
+  line-height: 1.15;
+}
+
+.user-info strong {
+  font-size: 12px;
+}
+
+.user-info span {
+  font-size: 10px;
+  opacity: 0.7;
+}
