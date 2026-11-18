@@ -6,7 +6,7 @@
 .facility-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .facility-name {
@@ -16,17 +16,17 @@
 }
 
 .facility-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
 
   flex-shrink: 0;
 
   display: grid;
   place-items: center;
 
-  border-radius: 10px;
+  border-radius: 13px;
 
-  background: #e1f6eb;
+  background: linear-gradient(135deg, #d7f1e4, #edf8f3);
   color: #008451;
 
   font-size: 19px;
@@ -37,7 +37,7 @@
 
   color: #1c2821;
 
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -46,7 +46,7 @@
 
   color: #89928d;
 
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .facility-stats {
@@ -70,10 +70,10 @@
 
 .stat strong {
   color: #005a34;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .stat span {
   color: #89928d;
-  font-size: 11px;
+  font-size: 13px;
 }

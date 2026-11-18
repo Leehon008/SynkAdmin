@@ -3,8 +3,9 @@
   <header class="dashboard-header">
 
     <div class="dashboard-heading">
-      <h1>Hello, Leonard Njunge 👋</h1>
-      <p>Sun, Aug 16, 2026</p>
+      <div class="welcome-label"><span></span> Daily overview</div>
+      <h1>Good morning, Lewis</h1>
+      <p>Sunday, August 16 · Here’s what needs your attention.</p>
     </div>
 
     <div class="dashboard-actions">
@@ -20,62 +21,56 @@
 
     <app-residents />
 
-    <app-ui-card
-      title="Timer"
-      subtitle="Task timer"
-    >
+    <app-ui-card title="Timer" subtitle="Task timer">
       <div class="placeholder">
-        Timer
+        <span class="placeholder-icon"><i class="bi bi-stopwatch"></i></span>
+        <strong>Ready when you are</strong>
+        <span>Start a care task timer</span>
       </div>
     </app-ui-card>
 
 
-    <app-ui-card
-      title="Notes"
-      subtitle="Recent notes"
-    >
+    <app-ui-card title="Notes" subtitle="Recent notes">
       <div class="placeholder">
-        No unread notes
+        <span class="placeholder-icon"><i class="bi bi-journal-text"></i></span>
+        <strong>You're all caught up</strong>
+        <span>No unread care notes</span>
       </div>
     </app-ui-card>
 
 
-    <app-ui-card
-      title="Alerts"
-      subtitle="Requires attention"
-    >
+    <app-ui-card title="Alerts" subtitle="Requires attention">
       <div class="placeholder">
-        Alerts
+        <span class="placeholder-icon alert"><i class="bi bi-bell"></i></span>
+        <strong>1 item needs review</strong>
+        <span>Resident care alerts</span>
       </div>
     </app-ui-card>
 
 
-    <app-ui-card
-      title="Team"
-      subtitle="Care team"
-    >
+    <app-ui-card title="Team" subtitle="Care team">
       <div class="placeholder">
-        Team members
+        <span class="placeholder-icon"><i class="bi bi-people"></i></span>
+        <strong>12 team members</strong>
+        <span>View the on-duty team</span>
       </div>
     </app-ui-card>
 
 
-    <app-ui-card
-      title="Medications"
-      subtitle="Medication activity"
-    >
+    <app-ui-card title="Medications" subtitle="Medication activity">
       <div class="placeholder">
-        Medications
+        <span class="placeholder-icon"><i class="bi bi-capsule-pill"></i></span>
+        <strong>No pending passes</strong>
+        <span>Next pass in 2 hours</span>
       </div>
     </app-ui-card>
 
 
-    <app-ui-card
-      title="Appointments"
-      subtitle="Upcoming appointments"
-    >
+    <app-ui-card title="Appointments" subtitle="Upcoming appointments">
       <div class="placeholder">
-        Appointments
+        <span class="placeholder-icon"><i class="bi bi-calendar2-week"></i></span>
+        <strong>3 upcoming visits</strong>
+        <span>View care calendar</span>
       </div>
     </app-ui-card>
 

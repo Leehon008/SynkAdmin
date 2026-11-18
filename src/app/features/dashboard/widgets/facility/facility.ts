@@ -9,7 +9,7 @@ import { UiCard } from '../../../../shared/components/ui-card/ui-card';
 })
 export class Facility {
   readonly facility = {
-    name: '#1 Empowering AFH 2 L',
+    name: 'Adult Facility AFH',
     address: '123 Main Street',
     city: 'Seattle, WA',
     residents: 6,

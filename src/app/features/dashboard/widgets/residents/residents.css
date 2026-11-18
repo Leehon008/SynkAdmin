@@ -9,7 +9,7 @@
 }
 
 .resident {
-  min-height: 54px;
+  min-height: 58px;
 
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@
 
   padding: 8px 0;
 
-  border-bottom: 1px solid #edf0ee;
+  border-bottom: 1px solid #eff3f1;
 }
 
 .resident:last-child {
@@ -39,7 +39,7 @@
 
   color: #26312b;
 
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
 
   white-space: nowrap;
@@ -49,18 +49,18 @@
 .resident-info span {
   color: #929b96;
 
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .status {
-  padding: 4px 8px;
+  padding: 5px 9px;
 
   border-radius: 12px;
 
   background: #e4f7ed;
   color: #087c4b;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -78,7 +78,7 @@
   background: transparent;
   color: #008451;
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
 }
 

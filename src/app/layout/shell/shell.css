@@ -13,7 +13,7 @@
 
   overflow: hidden;
 
-  background: #f2f3f2;
+  background: #f4f7f5;
 }
 
 .app-body {
@@ -24,12 +24,12 @@
 }
 
 .main-content {
-  padding: 4px;
+  padding: 0;
   flex: 1;
   min-width: 0;
   min-height: 0;
 
   overflow: auto;
 
-  background: #f2f3f2;
+  background: #f4f7f5;
 }
