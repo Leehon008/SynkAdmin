@@ -1,0 +1,19 @@
+<section class="section-page">
+  <header class="section-header">
+    <span class="section-eyebrow">Workspace</span>
+    <h1>{{ title }}</h1>
+    <p>{{ description }}</p>
+  </header>
+
+  <app-ui-card [title]="title" subtitle="Workspace">
+    <div class="section-placeholder">
+      <span class="placeholder-icon"><i class="bi bi-layout-text-window-reverse"></i></span>
+      <h2>This section is ready for content</h2>
+      <p>Use the sidebar to continue exploring your workspace.</p>
+      <a routerLink="/dashboard" class="dashboard-link">
+        <i class="bi bi-arrow-left"></i>
+        Back to dashboard
+      </a>
+    </div>
+  </app-ui-card>
+</section>

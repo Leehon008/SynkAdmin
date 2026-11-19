@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { App } from './app';
 import { routes } from './app.routes';
 
@@ -19,10 +19,17 @@ describe('App', () => {
 
   it('should render the dashboard', async () => {
     const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-    await fixture.whenStable();
+    await TestBed.inject(Router).navigateByUrl('/dashboard');
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.dashboard-heading h1')?.textContent).toContain('Good morning');
+  });
+
+  it('should render routed placeholder pages', async () => {
+    const fixture = TestBed.createComponent(App);
+    await TestBed.inject(Router).navigateByUrl('/reports');
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('Reports');
   });
 });

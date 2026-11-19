@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { UiCard } from '../../../../shared/components/ui-card/ui-card';
 import { UiAvatar } from '../../../../shared/components/ui-avatar/ui-avatar';
@@ -16,7 +17,8 @@ interface Resident {
   standalone: true,
   imports: [
     UiCard,
-    UiAvatar
+    UiAvatar,
+    RouterLink,
   ],
   templateUrl: './residents.html',
   styleUrl: './residents.css'

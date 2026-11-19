@@ -1,49 +1,37 @@
-<app-ui-card
-  title="Residents"
-  subtitle="Active residents"
->
+<app-ui-card title="Residents" subtitle="Active residents">
 
   <div class="residents">
 
     @for (resident of residents; track resident.id) {
 
-      <div class="resident">
+    <div class="resident">
 
-        <app-ui-avatar  
-          [initials]="resident.initials"
-          size="md"
-        />  
+      <app-ui-avatar [initials]="resident.initials" size="md" />
 
-        <div class="resident-info">
+      <div class="resident-info">
 
-          <strong>
-            {{ resident.name }}
-          </strong>
+        <strong>
+          {{ resident.name }}
+        </strong>
 
-          <span>
-            {{ resident.room }}
-          </span>
-
-        </div>
-
-        <span
-          class="status"
-          [class.attention]="resident.status === 'Attention'"
-        >
-          {{ resident.status }}
+        <span>
+          {{ resident.room }}
         </span>
 
       </div>
+
+      <span class="status" [class.attention]="resident.status === 'Attention'">
+        {{ resident.status }}
+      </span>
+
+    </div>
 
     }
 
   </div>
 
-  <button
-    card-actions
-    class="view-all"
-  >
+  <a card-actions class="view-all" routerLink="/residents">
     View all
-  </button>
+  </a>
 
 </app-ui-card>
