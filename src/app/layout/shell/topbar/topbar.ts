@@ -17,6 +17,13 @@ export class Topbar {
     { name: 'Evergreen Senior Living', location: 'Redmond, WA', residents: 12 },
   ];
 
+  readonly residentAvatars = [
+    { name: 'Mary Johnson', initials: 'MJ' },
+    { name: 'Robert Williams', initials: 'RW' },
+    { name: 'Patricia Brown', initials: 'PB' },
+    { name: 'James Davis', initials: 'JD' },
+  ];
+
   toggleFacilityMenu(): void {
     this.isFacilityMenuOpen = !this.isFacilityMenuOpen;
     this.isUserMenuOpen = false;

@@ -9,7 +9,10 @@
       <span class="brand-mark"><i class="bi bi-heart-pulse-fill"></i></span>
       <span class="brand-name">Medscape</span>
     </div>
-
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
     <div class="facility-dropdown">
       <button class="facility" type="button" aria-haspopup="menu" [attr.aria-expanded]="isFacilityMenuOpen"
         (click)="toggleFacilityMenu()">
@@ -46,6 +49,14 @@
 
   <div class="topbar-right">
 
+    <div class="resident-avatar-stack" role="img"
+      aria-label="Residents: Mary Johnson, Robert Williams, Patricia Brown, James Davis, and 2 more">
+      @for (resident of residentAvatars; track resident.initials) {
+      <span class="resident-avatar" [attr.title]="resident.name" aria-hidden="true">{{ resident.initials }}</span>
+      }
+      <span class="resident-avatar resident-avatar-more" title="2 more residents" aria-hidden="true">+2</span>
+    </div>
+
     <button class="topbar-icon" type="button" aria-label="Search"><i class="bi bi-search"></i></button>
     <button class="topbar-icon" type="button" aria-label="Apps"><i class="bi bi-grid-3x3-gap"></i></button>
     <button class="topbar-icon" type="button" aria-label="Help"><i class="bi bi-question-circle"></i></button>
@@ -54,9 +65,9 @@
     </button>
 
     <div class="user-dropdown">
-      <button class="user" type="button" aria-haspopup="menu" [attr.aria-expanded]="isUserMenuOpen"
-        (click)="toggleUserMenu()">
-        <span class="avatar">LH</span>
+      <button class="user" type="button" aria-label="Account menu for Mr Lewis Honye" aria-haspopup="menu"
+        [attr.aria-expanded]="isUserMenuOpen" (click)="toggleUserMenu()">
+        <img class="avatar" src="/user-avatar.svg" alt="">
 
         <span class="user-info">
           <strong>Mr Lewis Honye</strong>

@@ -52,6 +52,20 @@ export class Residents {
       initials: 'JD',
       room: 'Room 104',
       status: 'Stable'
+    },
+    {
+      id: 5,
+      name: 'Linda Martinez',
+      initials: 'LM',
+      room: 'Room 105',
+      status: 'Attention'
+    },
+    {
+      id: 6,
+      name: 'Sam Devonshire',
+      initials: 'SD',
+      room: 'Room 106',
+      status: 'Attention'
     }
   ];
 }
