@@ -1,11 +1,13 @@
 <div class="app-shell">
 
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
   <app-topbar></app-topbar>
 
   <div class="app-body">
 
     <app-sidebar></app-sidebar>
-    <main class="main-content"> 
+    <main class="main-content" id="main-content" tabindex="-1">
       <router-outlet></router-outlet>
     </main>
 

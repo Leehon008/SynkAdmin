@@ -7,18 +7,12 @@
 
     <div class="brand">
       <span class="brand-mark"><i class="bi bi-heart-pulse-fill"></i></span>
-      <span class="brand-name">Synkwise</span>
+      <span class="brand-name">Medscape</span>
     </div>
 
     <div class="facility-dropdown">
-      <button
-        class="facility"
-        type="button"
-        aria-label="Switch facility"
-        aria-haspopup="menu"
-        [attr.aria-expanded]="isFacilityMenuOpen"
-        (click)="toggleFacilityMenu()"
-      >
+      <button class="facility" type="button" aria-haspopup="menu" [attr.aria-expanded]="isFacilityMenuOpen"
+        (click)="toggleFacilityMenu()">
         <span class="facility-icon"><i class="bi bi-hospital"></i></span>
         <span class="facility-info">
           <strong>{{ facilityName }}</strong>
@@ -28,34 +22,23 @@
       </button>
 
       @if (isFacilityMenuOpen) {
-        <div class="facility-menu" role="menu" aria-label="Choose a facility">
-          <div class="dropdown-heading">
-            <strong>Your facilities</strong>
-            <span>Switch workspace</span>
-          </div>
-          @for (facility of facilities; track facility.name) {
-            <button
-              class="facility-option"
-              type="button"
-              role="menuitemradio"
-              [attr.aria-checked]="facility.name === facilityName"
-              (click)="selectFacility(facility.name)"
-            >
-              <span class="facility-option-icon"><i class="bi bi-building"></i></span>
-              <span class="facility-option-info">
-                <strong>{{ facility.name }}</strong>
-                <span>{{ facility.location }} · {{ facility.residents }} residents</span>
-              </span>
-              @if (facility.name === facilityName) {
-                <i class="bi bi-check2 facility-check"></i>
-              }
-            </button>
-          }
-          <div class="dropdown-footer">
-            <i class="bi bi-plus-circle"></i>
-            <span>Request facility access</span>
-          </div>
+      <div class="facility-menu" role="menu" aria-label="Choose a facility">
+        <div class="dropdown-heading">
+          <strong>Your facilities</strong>
         </div>
+        @for (facility of facilities; track facility.name) {
+        <button class="facility-option" type="button" role="menuitemradio"
+          [attr.aria-checked]="facility.name === facilityName" (click)="selectFacility(facility.name)">
+          <span class="facility-option-info">
+            <strong>{{ facility.name }}</strong>
+            <span>{{ facility.location }} · {{ facility.residents }} residents</span>
+          </span>
+          @if (facility.name === facilityName) {
+          <i class="bi bi-check2 facility-check"></i>
+          }
+        </button>
+        }
+      </div>
       }
     </div>
 
@@ -68,7 +51,6 @@
     <button class="topbar-icon" type="button" aria-label="Help"><i class="bi bi-question-circle"></i></button>
     <button class="topbar-icon notification-button" type="button" aria-label="Notifications">
       <i class="bi bi-bell"></i>
-      <span class="notification-dot"></span>
     </button>
 
     <div class="user-dropdown">
@@ -81,19 +63,11 @@
           <span>Provider</span>
         </span>
 
-        <span class="user-chevron" [class.open]="isUserMenuOpen">⌄</span>
+        <span class="user-chevron">⌄</span>
       </button>
 
       @if (isUserMenuOpen) {
       <div class="user-menu" role="menu">
-        <div class="user-menu-header">
-          <span class="avatar menu-avatar">LH</span>
-          <span>
-            <strong>Mr Lewis Honye</strong>
-            <small>Provider · Account active</small>
-          </span>
-        </div>
-        <div class="menu-divider"></div>
         <button type="button" role="menuitem" (click)="closeUserMenu()">
           <span class="menu-icon"><i class="bi bi-person"></i></span>
           <span>My profile</span>

@@ -40,7 +40,7 @@
   align-items: center;
   gap: 7px;
   margin-bottom: 7px;
-  color: #6f7d76;
+  color: #59675f;
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
@@ -69,7 +69,7 @@
 .dashboard-heading p {
   margin: 6px 0 0;
 
-  color: #84918a;
+  color: #5f6b64;
 
   font-size: 15px;
   line-height: 1.4;

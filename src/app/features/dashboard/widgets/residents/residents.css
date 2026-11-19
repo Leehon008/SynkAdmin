@@ -47,7 +47,7 @@
 }
 
 .resident-info span {
-  color: #929b96;
+  color: #68746d;
 
   font-size: 13px;
 }
@@ -66,7 +66,7 @@
 
 .status.attention {
   background: #fff3d8;
-  color: #9a6800;
+  color: #805000;
 }
 
 .view-all {
