@@ -2,7 +2,7 @@ import { ActivatedRoute, provideRouter } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { SectionPage } from './section-page';
 
-async function createPage(pageKey: string) {
+async function createPage(pageKey: string, residentId = '1') {
   await TestBed.configureTestingModule({
     imports: [SectionPage],
     providers: [
@@ -13,10 +13,10 @@ async function createPage(pageKey: string) {
           snapshot: {
             data: {
               pageKey,
-              title: pageKey === 'tasks' ? 'Task Manager' : 'Reports',
+              title: pageKey === 'tasks' ? 'Task Manager' : pageKey === 'medLog' ? 'Medication Log' : 'Reports',
               description: 'Demo page description.',
             },
-            paramMap: { get: () => '1' },
+            paramMap: { get: () => residentId },
           },
         },
       },
@@ -57,5 +57,26 @@ describe('SectionPage', () => {
     fixture.detectChanges();
 
     expect(row?.textContent).toContain('Completed');
+  });
+
+  it('shows individual eMAR entries and links each resident to their MAR', async () => {
+    const fixture = await createPage('emar');
+    const element = fixture.nativeElement as HTMLElement;
+    const residentLinks = element.querySelectorAll('.emar-resident-stack a');
+
+    expect(element.querySelectorAll('.record-row').length).toBe(12);
+    expect(residentLinks.length).toBe(6);
+    expect(residentLinks[1].getAttribute('href')).toBe('/emar/2/med-log');
+    expect(residentLinks[1].getAttribute('aria-label')).toBe('Open Robert Williams MAR');
+  });
+
+  it('shows the selected resident’s own administration history', async () => {
+    const fixture = await createPage('medLog', '2');
+    const element = fixture.nativeElement as HTMLElement;
+
+    expect(element.querySelector('h1')?.textContent).toContain('Medication Log');
+    expect(element.textContent).toContain('Robert Williams');
+    expect(element.textContent).toContain('Aspirin · 81 mg');
+    expect(element.textContent).not.toContain('Mary Johnson');
   });
 });

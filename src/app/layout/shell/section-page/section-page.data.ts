@@ -47,6 +47,18 @@ export interface OutlookItem {
   tone: RecordTone;
 }
 
+interface MedicationAdministration {
+  id: string;
+  name: string;
+  dose: string;
+  route: string;
+  schedule: string;
+  status: 'Due now' | 'Recorded' | 'Upcoming' | 'Scheduled';
+  tone: RecordTone;
+  recordedAt?: string;
+  recordedBy?: string;
+}
+
 export interface SectionPageContent {
   metrics: PageMetric[];
   listTitle: string;
@@ -73,10 +85,82 @@ const residentsPageRecords: PageRecord[] = DEMO_RESIDENTS.map((resident) => ({
   route: `/residents/${resident.id}/notes`,
 }));
 
+const DEMO_ADMINISTRATIONS: Record<number, MedicationAdministration[]> = {
+  1: [
+    { id: 'mary-lisinopril', name: 'Lisinopril', dose: '10 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Due now', tone: 'warning' },
+    { id: 'mary-calcium', name: 'Calcium', dose: '500 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:12 AM', recordedBy: 'Lewis Honye' },
+  ],
+  2: [
+    { id: 'robert-metformin', name: 'Metformin', dose: '500 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Due now', tone: 'warning' },
+    { id: 'robert-aspirin', name: 'Aspirin', dose: '81 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:08 AM', recordedBy: 'Lewis Honye' },
+  ],
+  3: [
+    { id: 'patricia-vitamin-d', name: 'Vitamin D', dose: '1000 IU', route: 'Oral', schedule: 'Midday · 12:00 PM', status: 'Upcoming', tone: 'info' },
+    { id: 'patricia-acetaminophen', name: 'Acetaminophen', dose: '325 mg', route: 'Oral', schedule: 'As needed', status: 'Recorded', tone: 'success', recordedAt: '9:32 AM', recordedBy: 'A. Rivera' },
+  ],
+  4: [
+    { id: 'james-atorvastatin', name: 'Atorvastatin', dose: '20 mg', route: 'Oral', schedule: 'Evening · 8:00 PM', status: 'Scheduled', tone: 'neutral' },
+    { id: 'james-melatonin', name: 'Melatonin', dose: '3 mg', route: 'Oral', schedule: 'Evening · 8:00 PM', status: 'Recorded', tone: 'success', recordedAt: '8:05 PM', recordedBy: 'J. Chen' },
+  ],
+  5: [
+    { id: 'linda-amlodipine', name: 'Amlodipine', dose: '5 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:15 AM', recordedBy: 'Lewis Honye' },
+    { id: 'linda-multivitamin', name: 'Multivitamin', dose: '1 tablet', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:17 AM', recordedBy: 'Lewis Honye' },
+  ],
+  6: [
+    { id: 'sam-omeprazole', name: 'Omeprazole', dose: '20 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:22 AM', recordedBy: 'A. Rivera' },
+    { id: 'sam-vitamin-b12', name: 'Vitamin B12', dose: '500 mcg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:24 AM', recordedBy: 'A. Rivera' },
+  ],
+};
+
+function getAdministrations(resident: Resident): MedicationAdministration[] {
+  return DEMO_ADMINISTRATIONS[resident.id] ?? [];
+}
+
+function createAdministrationRecord(
+  resident: Resident,
+  administration: MedicationAdministration,
+  mode: 'schedule' | 'pass' | 'log',
+): PageRecord {
+  const record: PageRecord = {
+    id: `${mode}-${administration.id}`,
+    title: `${administration.name} · ${administration.dose}`,
+    detail: `${resident.name} · ${resident.room} · ${administration.route}`,
+    meta: administration.schedule,
+    status: administration.status,
+    tone: administration.tone,
+    icon: 'bi bi-capsule',
+    route: `/emar/${resident.id}/med-pass`,
+  };
+
+  if (mode === 'pass') {
+    record.done = administration.status === 'Recorded';
+    record.incompleteStatus = administration.status === 'Recorded' ? 'Due' : administration.status;
+    record.incompleteTone = administration.status === 'Recorded' ? 'warning' : administration.tone;
+  }
+
+  if (mode === 'log' && administration.recordedAt) {
+    record.meta = `Today · ${administration.recordedAt} · ${administration.recordedBy}`;
+    record.status = 'Administered';
+    record.tone = 'success';
+    delete record.route;
+  }
+
+  return record;
+}
+
 export function createSectionPageContent(
   key: SectionPageKey,
   currentResident: Resident,
 ): SectionPageContent {
+  const administrations = getAdministrations(currentResident);
+  const recordedAdministrations = administrations.filter(({ recordedAt }) => recordedAt);
+  const allAdministrations = DEMO_RESIDENTS.flatMap((resident) =>
+    getAdministrations(resident).map((administration) =>
+      createAdministrationRecord(resident, administration, 'schedule'),
+    ),
+  );
+  const dueAdministrations = allAdministrations.filter((record) => record.status === 'Due now');
+
   switch (key) {
     case 'facility':
       return {
@@ -130,26 +214,21 @@ export function createSectionPageContent(
     case 'emar':
       return {
         metrics: [
-          { label: 'Scheduled today', value: '12', note: 'Across 6 residents', icon: 'bi bi-capsule' },
-          { label: 'Due now', value: '2', note: 'Review the next pass', icon: 'bi bi-alarm' },
+          { label: 'Individual orders', value: String(allAdministrations.length), note: 'Across 6 residents', icon: 'bi bi-capsule' },
+          { label: 'Due now', value: String(dueAdministrations.length), note: 'Review the next pass', icon: 'bi bi-alarm' },
           { label: 'Missed doses', value: '0', note: 'No exceptions reported', icon: 'bi bi-check2-circle' },
         ],
-        listTitle: 'Medication schedule',
-        listDescription: 'Upcoming administration windows for today.',
+        listTitle: 'Individual administrations',
+        listDescription: 'Medication orders and administration status by resident.',
         searchPlaceholder: 'Search medication or resident',
         emptyMessage: 'No medication records match your search.',
-        records: [
-          { id: 'med-1', title: 'Lisinopril · 10 mg', detail: 'Mary Johnson · Room 101', meta: 'Morning · 8:00 AM', status: 'Due now', tone: 'warning', icon: 'bi bi-capsule', route: '/emar/1/med-pass' },
-          { id: 'med-2', title: 'Metformin · 500 mg', detail: 'Robert Williams · Room 102', meta: 'Morning · 8:00 AM', status: 'Due now', tone: 'warning', icon: 'bi bi-capsule', route: '/emar/2/med-pass' },
-          { id: 'med-3', title: 'Vitamin D · 1000 IU', detail: 'Patricia Brown · Room 103', meta: 'Midday · 12:00 PM', status: 'Upcoming', tone: 'info', icon: 'bi bi-capsule', route: '/emar/3/med-pass' },
-          { id: 'med-4', title: 'Atorvastatin · 20 mg', detail: 'James Davis · Room 104', meta: 'Evening · 8:00 PM', status: 'Scheduled', tone: 'neutral', icon: 'bi bi-capsule', route: '/emar/4/med-pass' },
-        ],
+        records: allAdministrations,
         outlookTitle: 'Next medication windows',
         outlookDescription: 'Sample schedule for planning only.',
         outlookItems: [
           { time: '8:00 AM', title: 'Morning pass', detail: '2 administrations need review', tone: 'warning' },
-          { time: '12:00 PM', title: 'Midday pass', detail: '4 administrations scheduled', tone: 'info' },
-          { time: '8:00 PM', title: 'Evening pass', detail: '6 administrations scheduled', tone: 'neutral' },
+          { time: '12:00 PM', title: 'Midday pass', detail: '1 individual order scheduled', tone: 'info' },
+          { time: '8:00 PM', title: 'Evening pass', detail: '2 individual orders scheduled', tone: 'neutral' },
         ],
         actionLabel: 'Start next pass',
         actionRoute: '/emar/1/med-pass',
@@ -158,18 +237,16 @@ export function createSectionPageContent(
       return {
         metrics: [
           { label: 'Resident', value: currentResident.name, note: currentResident.room, icon: 'bi bi-person' },
-          { label: 'Pass window', value: '8:00 AM', note: 'Morning medications', icon: 'bi bi-clock' },
-          { label: 'Recorded', value: '1 of 3', note: 'Demo progress for this session', icon: 'bi bi-check2-square' },
+          { label: 'Pass window', value: administrations[0]?.schedule.split(' · ').at(-1) ?? 'Today', note: 'Scheduled administration', icon: 'bi bi-clock' },
+          { label: 'Recorded', value: `${recordedAdministrations.length} of ${administrations.length}`, note: 'Demo progress for this session', icon: 'bi bi-check2-square' },
         ],
         listTitle: 'Medication pass',
-        listDescription: `Review the listed orders for ${currentResident.name}.`,
+        listDescription: `Individual administration orders for ${currentResident.name}.`,
         searchPlaceholder: 'Search medications',
         emptyMessage: 'No medications match your search.',
-        records: [
-          { id: 'pass-1', title: 'Lisinopril · 10 mg', detail: 'Oral · morning administration', meta: 'Scheduled 8:00 AM', status: 'Recorded', tone: 'success', icon: 'bi bi-capsule', done: true, incompleteStatus: 'Due', incompleteTone: 'warning' },
-          { id: 'pass-2', title: 'Calcium · 500 mg', detail: 'Oral · take with breakfast', meta: 'Scheduled 8:00 AM', status: 'Due', tone: 'warning', icon: 'bi bi-capsule', done: false, incompleteStatus: 'Due', incompleteTone: 'warning' },
-          { id: 'pass-3', title: 'Vitamin D · 1000 IU', detail: 'Oral · morning administration', meta: 'Scheduled 8:00 AM', status: 'Due', tone: 'warning', icon: 'bi bi-capsule', done: false, incompleteStatus: 'Due', incompleteTone: 'warning' },
-        ],
+        records: administrations.map((administration) =>
+          createAdministrationRecord(currentResident, administration, 'pass'),
+        ),
         outlookTitle: 'Pass checklist',
         outlookDescription: 'Demo workflow — confirm all orders in the official record.',
         outlookItems: [
@@ -183,19 +260,17 @@ export function createSectionPageContent(
     case 'medLog':
       return {
         metrics: [
-          { label: 'Entries today', value: '3', note: currentResident.name, icon: 'bi bi-journal-medical' },
+          { label: 'Entries today', value: String(recordedAdministrations.length), note: currentResident.name, icon: 'bi bi-journal-medical' },
           { label: 'Documented', value: '100%', note: 'Sample day view', icon: 'bi bi-check2-circle' },
-          { label: 'Last updated', value: '8:12 AM', note: 'Morning pass', icon: 'bi bi-clock-history' },
+          { label: 'Last updated', value: recordedAdministrations[0]?.recordedAt ?? 'No entries', note: 'Latest sample entry', icon: 'bi bi-clock-history' },
         ],
         listTitle: 'Administration history',
-        listDescription: `Recent sample entries for ${currentResident.name}.`,
+        listDescription: `Recorded individual administrations for ${currentResident.name}.`,
         searchPlaceholder: 'Search medication history',
         emptyMessage: 'No medication entries match your search.',
-        records: [
-          { id: 'log-1', title: 'Lisinopril · 10 mg', detail: `${currentResident.name} · ${currentResident.room}`, meta: 'Today · 8:12 AM · Lewis Honye', status: 'Administered', tone: 'success', icon: 'bi bi-capsule' },
-          { id: 'log-2', title: 'Calcium · 500 mg', detail: `${currentResident.name} · ${currentResident.room}`, meta: 'Today · 8:08 AM · Lewis Honye', status: 'Administered', tone: 'success', icon: 'bi bi-capsule' },
-          { id: 'log-3', title: 'Vitamin D · 1000 IU', detail: `${currentResident.name} · ${currentResident.room}`, meta: 'Yesterday · 8:05 AM · A. Rivera', status: 'Administered', tone: 'success', icon: 'bi bi-capsule' },
-        ],
+        records: recordedAdministrations.map((administration) =>
+          createAdministrationRecord(currentResident, administration, 'log'),
+        ),
         outlookTitle: 'Documentation notes',
         outlookDescription: 'Sample audit context.',
         outlookItems: [

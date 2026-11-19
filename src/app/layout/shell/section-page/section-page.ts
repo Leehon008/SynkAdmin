@@ -42,6 +42,7 @@ export class SectionPage {
   readonly currentResident =
     DEMO_RESIDENTS.find((resident) => resident.id === Number(this.route.snapshot.paramMap.get('residentId'))) ??
     DEMO_RESIDENTS[0];
+  readonly residents = DEMO_RESIDENTS;
   readonly showResidentContext = [
     'residentNotes',
     'residentTasks',

@@ -4,6 +4,19 @@
       <span class="section-eyebrow">Care operations</span>
       <h1>{{ title }}</h1>
       <p>{{ description }}</p>
+      @if (pageKey === 'emar') {
+        <div class="resident-context emar-resident-picker" role="group" aria-label="Choose a resident MAR">
+          <strong>Resident MARs</strong>
+          <div class="emar-resident-stack">
+            @for (resident of residents; track resident.id) {
+              <a [routerLink]="['/emar', resident.id, 'med-log']"
+                [attr.aria-label]="'Open ' + resident.name + ' MAR'" [attr.title]="resident.name">
+                <app-ui-avatar [initials]="resident.initials" size="sm" />
+              </a>
+            }
+          </div>
+        </div>
+      }
       @if (showResidentContext) {
         <div class="resident-context">
           <app-ui-avatar [initials]="currentResident.initials" size="sm" />
