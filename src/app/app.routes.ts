@@ -16,7 +16,34 @@ export const routes: Routes = [
         data: {
           pageKey: 'facility',
           title: 'Manage Facility',
-          description: 'Facility profile, rooms, staff, and operational settings.',
+          description: 'Facility profile, rooms, staff, operational settings, and admin operations.',
+        },
+      },
+      {
+        path: 'admin-ops',
+        component: SectionPage,
+        data: {
+          pageKey: 'adminOps',
+          title: 'Admin Ops',
+          description: 'Coordinate compliance, staff records, approvals, and facility administration.',
+        },
+      },
+      {
+        path: 'admin-ops/staff',
+        component: SectionPage,
+        data: {
+          pageKey: 'staffManagement',
+          title: 'Staff Management',
+          description: 'Review staff profiles, assignments, and credential status.',
+        },
+      },
+      {
+        path: 'admin-ops/roles',
+        component: SectionPage,
+        data: {
+          pageKey: 'roleManagement',
+          title: 'Role Management',
+          description: 'Review role assignments and facility access profiles.',
         },
       },
       {

@@ -75,6 +75,35 @@
   box-shadow: 0 3px 10px rgba(20, 120, 78, 0.08);
 }
 
+.facility-nav-row {
+  display: flex;
+  align-items: center;
+}
+
+.facility-nav-link {
+  width: auto;
+  flex: 1;
+}
+
+.facility-nav-toggle {
+  width: 30px;
+  height: 42px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  color: #87958e;
+  background: transparent;
+}
+
+.facility-nav-toggle:hover,
+.facility-nav-toggle[aria-expanded="true"] { color: #08734d; background: #f1f7f4; }
+.facility-nav-toggle i { transition: transform 150ms ease; }
+.facility-nav-toggle i.rotated { transform: rotate(180deg); }
+.facility-subitem { min-height: 40px; padding-left: 22px; font-size: 13px; }
+.admin-ops-subitem { width: calc(100% - 18px); margin-left: 18px; min-height: 36px; font-size: 12px; }
+
 .arrow {
   margin-left: auto;
   color: #9ca7a1;

@@ -1,7 +1,11 @@
 import { DEMO_RESIDENTS, type Resident } from '../../../shared/data/demo-residents';
+import { getDemoAdministrations, type MedicationAdministration } from '../../../shared/data/demo-medications';
 
 export type SectionPageKey =
   | 'facility'
+  | 'adminOps'
+  | 'staffManagement'
+  | 'roleManagement'
   | 'residents'
   | 'emar'
   | 'medPass'
@@ -47,18 +51,6 @@ export interface OutlookItem {
   tone: RecordTone;
 }
 
-interface MedicationAdministration {
-  id: string;
-  name: string;
-  dose: string;
-  route: string;
-  schedule: string;
-  status: 'Due now' | 'Recorded' | 'Upcoming' | 'Scheduled';
-  tone: RecordTone;
-  recordedAt?: string;
-  recordedBy?: string;
-}
-
 export interface SectionPageContent {
   metrics: PageMetric[];
   listTitle: string;
@@ -85,35 +77,8 @@ const residentsPageRecords: PageRecord[] = DEMO_RESIDENTS.map((resident) => ({
   route: `/residents/${resident.id}/notes`,
 }));
 
-const DEMO_ADMINISTRATIONS: Record<number, MedicationAdministration[]> = {
-  1: [
-    { id: 'mary-lisinopril', name: 'Lisinopril', dose: '10 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Due now', tone: 'warning' },
-    { id: 'mary-calcium', name: 'Calcium', dose: '500 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:12 AM', recordedBy: 'Lewis Honye' },
-  ],
-  2: [
-    { id: 'robert-metformin', name: 'Metformin', dose: '500 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Due now', tone: 'warning' },
-    { id: 'robert-aspirin', name: 'Aspirin', dose: '81 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:08 AM', recordedBy: 'Lewis Honye' },
-  ],
-  3: [
-    { id: 'patricia-vitamin-d', name: 'Vitamin D', dose: '1000 IU', route: 'Oral', schedule: 'Midday · 12:00 PM', status: 'Upcoming', tone: 'info' },
-    { id: 'patricia-acetaminophen', name: 'Acetaminophen', dose: '325 mg', route: 'Oral', schedule: 'As needed', status: 'Recorded', tone: 'success', recordedAt: '9:32 AM', recordedBy: 'A. Rivera' },
-  ],
-  4: [
-    { id: 'james-atorvastatin', name: 'Atorvastatin', dose: '20 mg', route: 'Oral', schedule: 'Evening · 8:00 PM', status: 'Scheduled', tone: 'neutral' },
-    { id: 'james-melatonin', name: 'Melatonin', dose: '3 mg', route: 'Oral', schedule: 'Evening · 8:00 PM', status: 'Recorded', tone: 'success', recordedAt: '8:05 PM', recordedBy: 'J. Chen' },
-  ],
-  5: [
-    { id: 'linda-amlodipine', name: 'Amlodipine', dose: '5 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:15 AM', recordedBy: 'Lewis Honye' },
-    { id: 'linda-multivitamin', name: 'Multivitamin', dose: '1 tablet', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:17 AM', recordedBy: 'Lewis Honye' },
-  ],
-  6: [
-    { id: 'sam-omeprazole', name: 'Omeprazole', dose: '20 mg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:22 AM', recordedBy: 'A. Rivera' },
-    { id: 'sam-vitamin-b12', name: 'Vitamin B12', dose: '500 mcg', route: 'Oral', schedule: 'Morning · 8:00 AM', status: 'Recorded', tone: 'success', recordedAt: '8:24 AM', recordedBy: 'A. Rivera' },
-  ],
-};
-
 function getAdministrations(resident: Resident): MedicationAdministration[] {
-  return DEMO_ADMINISTRATIONS[resident.id] ?? [];
+  return getDemoAdministrations(resident.id);
 }
 
 function createAdministrationRecord(
@@ -178,6 +143,7 @@ export function createSectionPageContent(
           { id: 'team', title: 'Care team', detail: '12 active team members · 4 on shift', meta: 'Next handoff at 7:00 PM', status: 'Staffed', tone: 'info', icon: 'bi bi-people' },
           { id: 'license', title: 'License & compliance', detail: 'Annual facility review scheduled', meta: 'Documents last checked Nov 14', status: 'On track', tone: 'success', icon: 'bi bi-shield-check' },
           { id: 'emergency', title: 'Emergency readiness', detail: 'Next safety drill: December 2', meta: 'Fire and evacuation plan', status: 'Upcoming', tone: 'warning', icon: 'bi bi-exclamation-triangle' },
+          { id: 'admin-ops', title: 'Admin operations', detail: 'Review staff files, compliance, and approvals', meta: '2 items need follow-up', status: 'Review', tone: 'warning', icon: 'bi bi-clipboard-data', route: '/admin-ops' },
         ],
         outlookTitle: 'Facility outlook',
         outlookDescription: 'Upcoming operations at a glance.',
@@ -188,6 +154,90 @@ export function createSectionPageContent(
         ],
         actionLabel: 'View residents',
         actionRoute: '/residents',
+      };
+    case 'adminOps':
+      return {
+        metrics: [
+          { label: 'Staff files current', value: '10 / 12', note: '2 credentials need renewal', icon: 'bi bi-person-vcard' },
+          { label: 'Compliance reviews', value: '2', note: 'Due this month', icon: 'bi bi-shield-check' },
+          { label: 'Pending approvals', value: '3', note: 'Invoices and requests', icon: 'bi bi-clipboard-check' },
+        ],
+        listTitle: 'Administrative operations',
+        listDescription: 'Keep facility records, staff requirements, and approvals on track.',
+        searchPlaceholder: 'Search admin operations',
+        emptyMessage: 'No administrative items match your search.',
+        records: [
+          { id: 'staff-management', title: 'Staff Management', detail: 'Manage staff profiles, assignments, and credentials.', meta: '12 team members · 2 renewals due', status: 'Open directory', tone: 'info', icon: 'bi bi-people', route: '/admin-ops/staff' },
+          { id: 'role-management', title: 'Role Management', detail: 'Review role assignments and facility access profiles.', meta: '5 roles · 12 assignments', status: 'Review access', tone: 'info', icon: 'bi bi-person-gear', route: '/admin-ops/roles' },
+          { id: 'staff-files', title: 'Staff credential renewals', detail: 'Two staff certifications expire soon.', meta: 'Due Nov 25 · Staff operations', status: 'Needs review', tone: 'warning', icon: 'bi bi-person-vcard' },
+          { id: 'license-review', title: 'Facility license review', detail: 'Prepare the annual licensing packet.', meta: 'Due Dec 1 · Compliance', status: 'In progress', tone: 'info', icon: 'bi bi-shield-check' },
+          { id: 'invoice-approval', title: 'Vendor invoice approvals', detail: 'Three invoices are awaiting sign-off.', meta: 'Updated today · Finance', status: 'Pending', tone: 'warning', icon: 'bi bi-receipt' },
+          { id: 'policy-review', title: 'Policy acknowledgement', detail: 'Confirm the latest staff handbook review.', meta: 'Due Dec 5 · Staff operations', status: 'On track', tone: 'success', icon: 'bi bi-file-earmark-check' },
+        ],
+        outlookTitle: 'Admin ops outlook',
+        outlookDescription: 'Upcoming deadlines and decisions.',
+        outlookItems: [
+          { time: 'Today', title: 'Invoice approvals', detail: '3 vendor items await review', tone: 'warning' },
+          { time: 'Nov 25', title: 'Credential renewals', detail: 'Follow up with 2 staff members', tone: 'warning' },
+          { time: 'Dec 1', title: 'License packet', detail: 'Complete annual facility review', tone: 'info' },
+        ],
+        actionLabel: 'Facility profile',
+        actionRoute: '/facility',
+      };
+    case 'staffManagement':
+      return {
+        metrics: [
+          { label: 'Team members', value: '12', note: 'Active facility staff', icon: 'bi bi-people' },
+          { label: 'On shift today', value: '4', note: 'Coverage confirmed', icon: 'bi bi-person-check' },
+          { label: 'Credential renewals', value: '2', note: 'Follow up by Nov 25', icon: 'bi bi-patch-exclamation' },
+        ],
+        listTitle: 'Staff directory',
+        listDescription: 'Sample staff profiles, assignments, and credential status.',
+        searchPlaceholder: 'Search staff or role',
+        emptyMessage: 'No staff records match your search.',
+        records: [
+          { id: 'staff-lewis', title: 'Lewis Honye', detail: 'Provider · Facility administrator', meta: 'On shift · Active profile', status: 'Active', tone: 'success', icon: 'bi bi-person-badge' },
+          { id: 'staff-ana', title: 'Ana Rivera', detail: 'Care Lead · Resident services', meta: 'Credential renewal due Nov 25', status: 'Renewal due', tone: 'warning', icon: 'bi bi-person-badge' },
+          { id: 'staff-jordan', title: 'Jordan Chen', detail: 'Caregiver · Evening team', meta: 'Next shift today · 3:00 PM', status: 'Active', tone: 'success', icon: 'bi bi-person-badge' },
+          { id: 'staff-casey', title: 'Casey Wong', detail: 'Administrator · Facility operations', meta: 'Profile reviewed Nov 12', status: 'Active', tone: 'success', icon: 'bi bi-person-badge' },
+          { id: 'staff-jamie', title: 'Jamie Patel', detail: 'Nurse · Resident services', meta: 'Credential renewal due Nov 25', status: 'Renewal due', tone: 'warning', icon: 'bi bi-person-badge' },
+        ],
+        outlookTitle: 'Staffing outlook',
+        outlookDescription: 'Coverage and staff follow-ups.',
+        outlookItems: [
+          { time: 'Today · 3:00 PM', title: 'Evening team starts', detail: '4 staff members scheduled across the shift', tone: 'info' },
+          { time: 'Nov 25', title: 'Credential renewals', detail: 'Follow up with 2 staff members', tone: 'warning' },
+          { time: 'Weekly', title: 'Profile review', detail: 'Confirm contact details and role assignments', tone: 'success' },
+        ],
+        actionLabel: 'Review roles',
+        actionRoute: '/admin-ops/roles',
+      };
+    case 'roleManagement':
+      return {
+        metrics: [
+          { label: 'Facility roles', value: '5', note: 'Standard access profiles', icon: 'bi bi-person-gear' },
+          { label: 'Assignments', value: '12', note: 'Across the staff team', icon: 'bi bi-people' },
+          { label: 'Access reviews', value: '2', note: 'Due this month', icon: 'bi bi-shield-check' },
+        ],
+        listTitle: 'Roles & access profiles',
+        listDescription: 'Sample responsibilities and assigned team members.',
+        searchPlaceholder: 'Search roles or access',
+        emptyMessage: 'No roles match your search.',
+        records: [
+          { id: 'role-admin', title: 'Administrator', detail: 'Facility configuration, staff access, and policy oversight.', meta: '1 assigned · Lewis Honye', status: 'Full access', tone: 'info', icon: 'bi bi-person-gear' },
+          { id: 'role-manager', title: 'Facility Manager', detail: 'Rooms, operational settings, and administrative approvals.', meta: '2 assigned · Review quarterly', status: 'Review due', tone: 'warning', icon: 'bi bi-building-gear' },
+          { id: 'role-provider', title: 'Provider', detail: 'Resident records and care coordination tools.', meta: '3 assigned · Active', status: 'Active', tone: 'success', icon: 'bi bi-person-heart' },
+          { id: 'role-caregiver', title: 'Caregiver', detail: 'Assigned resident tasks, notes, and shift handoffs.', meta: '4 assigned · Active', status: 'Active', tone: 'success', icon: 'bi bi-person-hearts' },
+          { id: 'role-support', title: 'Support Staff', detail: 'Facility tasks and team communication tools.', meta: '2 assigned · Review quarterly', status: 'Review due', tone: 'warning', icon: 'bi bi-person-lines-fill' },
+        ],
+        outlookTitle: 'Access review',
+        outlookDescription: 'Keep access aligned with current responsibilities.',
+        outlookItems: [
+          { time: 'This month', title: '2 role reviews due', detail: 'Confirm facility manager and support staff access', tone: 'warning' },
+          { time: 'Quarterly', title: 'Check role assignments', detail: 'Review changes when staff responsibilities shift', tone: 'info' },
+        ],
+        actionLabel: 'Staff directory',
+        actionRoute: '/admin-ops/staff',
       };
     case 'residents':
       return {

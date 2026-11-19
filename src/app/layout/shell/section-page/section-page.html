@@ -19,22 +19,22 @@
       }
       @if (showResidentContext) {
         <div class="resident-context">
-          <app-ui-avatar [initials]="currentResident.initials" size="sm" />
-          <span>{{ currentResident.name }} · {{ currentResident.room }}</span>
+          <app-ui-avatar [initials]="currentResident().initials" size="sm" />
+          <span>{{ currentResident().name }} · {{ currentResident().room }}</span>
         </div>
       }
     </div>
-    @if (content.actionLabel && content.actionRoute) {
-      <a class="primary-action" [routerLink]="content.actionRoute">
+    @if (content().actionLabel && content().actionRoute) {
+      <a class="primary-action" [routerLink]="content().actionRoute">
         <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
-        {{ content.actionLabel }}
+        {{ content().actionLabel }}
       </a>
     }
   </header>
 
-  @if (content.metrics.length) {
+  @if (content().metrics.length) {
     <section class="metric-grid" aria-label="Page overview">
-      @for (metric of content.metrics; track metric.label) {
+      @for (metric of content().metrics; track metric.label) {
         <article class="metric-card">
           <span class="metric-icon"><i [class]="metric.icon" aria-hidden="true"></i></span>
           <div class="metric-copy">
@@ -48,13 +48,13 @@
   }
 
   <div class="page-layout">
-    <app-ui-card [title]="content.listTitle" [subtitle]="content.listDescription">
+    <app-ui-card [title]="content().listTitle" [subtitle]="content().listDescription">
       <section aria-label="Workspace records">
         <div class="record-controls">
           <label class="search-control">
             <i class="bi bi-search" aria-hidden="true"></i>
-            <input type="search" [placeholder]="content.searchPlaceholder"
-              [attr.aria-label]="content.searchPlaceholder" (input)="updateSearch($event)">
+            <input type="search" [placeholder]="content().searchPlaceholder"
+              [attr.aria-label]="content().searchPlaceholder" (input)="updateSearch($event)">
           </label>
           @if (statusOptions.length > 1) {
             <label class="filter-control">
@@ -107,7 +107,7 @@
         } @else {
           <div class="empty-state" role="status">
             <i class="bi bi-search" aria-hidden="true"></i>
-            <strong>{{ content.emptyMessage }}</strong>
+            <strong>{{ content().emptyMessage }}</strong>
             @if (searchQuery || selectedStatus !== 'all') {
               <button type="button" class="reset-filter" (click)="searchQuery = ''; selectedStatus = 'all'">
                 Clear filters
@@ -122,9 +122,9 @@
       </section>
     </app-ui-card>
 
-    <app-ui-card [title]="content.outlookTitle" [subtitle]="content.outlookDescription">
+    <app-ui-card [title]="content().outlookTitle" [subtitle]="content().outlookDescription">
       <ol class="outlook-list">
-        @for (item of content.outlookItems; track item.title) {
+        @for (item of content().outlookItems; track item.title) {
           <li>
             <div>
               <small>{{ item.time }}</small>

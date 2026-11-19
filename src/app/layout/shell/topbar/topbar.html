@@ -49,13 +49,18 @@
 
   <div class="topbar-right">
 
-    <div class="resident-avatar-stack" role="img" [attr.aria-label]="residentAvatarLabel">
+    <nav class="resident-avatar-stack" aria-label="Resident MAR shortcuts">
       @for (resident of residentAvatars; track resident.initials) {
-      <span class="resident-avatar" [attr.title]="resident.name" aria-hidden="true">{{ resident.initials }}</span>
+      <a class="resident-avatar" [routerLink]="['/emar', resident.id, 'med-log']"
+        [attr.title]="resident.name + ' · Open MAR'"
+        [attr.aria-label]="'Open ' + resident.name + ' MAR'">{{ resident.initials }}</a>
       }
-      <span class="resident-avatar resident-avatar-more" [attr.title]="hiddenResidentCount + ' more residents'"
-        aria-hidden="true">+{{ hiddenResidentCount }}</span>
-    </div>
+      @if (hiddenResidentCount > 0) {
+      <a class="resident-avatar resident-avatar-more" routerLink="/emar"
+        [attr.title]="hiddenResidentCount + ' more residents'"
+        [attr.aria-label]="'View ' + hiddenResidentCount + ' more residents in eMAR'">+{{ hiddenResidentCount }}</a>
+      }
+    </nav>
 
     <button class="topbar-icon" type="button" aria-label="Search"><i class="bi bi-search"></i></button>
     <button class="topbar-icon" type="button" aria-label="Apps"><i class="bi bi-grid-3x3-gap"></i></button>

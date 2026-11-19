@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UiCard } from '../../../shared/components/ui-card/ui-card';
 import { UiAvatar } from '../../../shared/components/ui-avatar/ui-avatar';
@@ -8,6 +9,9 @@ import type { PageRecord, SectionPageKey } from './section-page.data';
 
 const PAGE_KEYS: readonly SectionPageKey[] = [
   'facility',
+  'adminOps',
+  'staffManagement',
+  'roleManagement',
   'residents',
   'emar',
   'medPass',
@@ -35,13 +39,18 @@ function getPageKey(value: unknown): SectionPageKey {
 })
 export class SectionPage {
   private readonly route = inject(ActivatedRoute);
+  private readonly routeParamMap = toSignal(this.route.paramMap, {
+    initialValue: this.route.snapshot.paramMap,
+  });
 
   readonly pageKey = getPageKey(this.route.snapshot.data['pageKey']);
   readonly title = String(this.route.snapshot.data['title'] ?? 'Workspace');
   readonly description = String(this.route.snapshot.data['description'] ?? '');
-  readonly currentResident =
-    DEMO_RESIDENTS.find((resident) => resident.id === Number(this.route.snapshot.paramMap.get('residentId'))) ??
-    DEMO_RESIDENTS[0];
+  readonly currentResident = computed(
+    () =>
+      DEMO_RESIDENTS.find((resident) => resident.id === Number(this.routeParamMap().get('residentId'))) ??
+      DEMO_RESIDENTS[0],
+  );
   readonly residents = DEMO_RESIDENTS;
   readonly showResidentContext = [
     'residentNotes',
@@ -49,11 +58,19 @@ export class SectionPage {
     'medPass',
     'medLog',
   ].includes(this.pageKey);
-  readonly content = createSectionPageContent(this.pageKey, this.currentResident);
+  readonly content = computed(() => createSectionPageContent(this.pageKey, this.currentResident()));
 
-  records: PageRecord[] = this.content.records.map((record) => ({ ...record }));
+  records: PageRecord[] = this.content().records.map((record) => ({ ...record }));
   searchQuery = '';
   selectedStatus = 'all';
+
+  constructor() {
+    effect(() => {
+      this.records = this.content().records.map((record) => ({ ...record }));
+      this.searchQuery = '';
+      this.selectedStatus = 'all';
+    });
+  }
 
   get statusOptions(): string[] {
     return [...new Set(this.records.map((record) => record.status))];

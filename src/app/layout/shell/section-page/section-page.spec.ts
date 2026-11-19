@@ -1,5 +1,6 @@
 import { ActivatedRoute, provideRouter } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { SectionPage } from './section-page';
 
 async function createPage(pageKey: string, residentId = '1') {
@@ -18,6 +19,7 @@ async function createPage(pageKey: string, residentId = '1') {
             },
             paramMap: { get: () => residentId },
           },
+          paramMap: of({ get: () => residentId }),
         },
       },
     ],

@@ -1,1 +1,37 @@
-<p>medications works!</p>
+<app-ui-card title="Medications" subtitle="Medication activity">
+  <div class="medication-summary">
+    <div class="due-count">
+      <strong>{{ dueCount }}</strong>
+      <span>due now</span>
+    </div>
+    <span class="summary-detail">{{ administrations.length }} individual orders</span>
+    <span class="summary-detail">{{ recordedCount }} recorded</span>
+  </div>
+
+  <div class="medication-list">
+    @for (administration of visibleAdministrations; track administration.id) {
+      <a
+        class="medication-row"
+        [routerLink]="['/emar', administration.resident.id, 'med-pass']"
+        [attr.aria-label]="'Open ' + administration.resident.name + '\'s medication pass for ' + administration.name"
+      >
+        <span class="medication-icon"><i class="bi bi-capsule"></i></span>
+        <span class="medication-info">
+          <strong>{{ administration.name }} · {{ administration.dose }}</strong>
+          <span>{{ administration.resident.name }} · {{ administration.resident.room }} · {{ administration.schedule }}</span>
+        </span>
+        <span
+          class="medication-status"
+          [class.warning]="administration.tone === 'warning'"
+          [class.info]="administration.tone === 'info'"
+          [class.neutral]="administration.tone === 'neutral'"
+          [class.success]="administration.tone === 'success'"
+        >
+          {{ administration.status }}
+        </span>
+      </a>
+    }
+  </div>
+
+  <a card-actions class="view-all" routerLink="/emar">View eMAR</a>
+</app-ui-card>

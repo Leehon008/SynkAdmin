@@ -7,4 +7,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
-export class Sidebar {}
+export class Sidebar {
+  isFacilityMenuOpen = false;
+
+  toggleFacilityMenu(): void {
+    this.isFacilityMenuOpen = !this.isFacilityMenuOpen;
+  }
+}
