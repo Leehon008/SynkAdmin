@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { DEMO_RESIDENTS } from '../../../shared/data/demo-residents';
 
 @Component({
   selector: 'app-topbar',
@@ -17,12 +18,9 @@ export class Topbar {
     { name: 'Evergreen Senior Living', location: 'Redmond, WA', residents: 12 },
   ];
 
-  readonly residentAvatars = [
-    { name: 'Mary Johnson', initials: 'MJ' },
-    { name: 'Robert Williams', initials: 'RW' },
-    { name: 'Patricia Brown', initials: 'PB' },
-    { name: 'James Davis', initials: 'JD' },
-  ];
+  readonly residentAvatars = DEMO_RESIDENTS.slice(0, 4);
+  readonly hiddenResidentCount = DEMO_RESIDENTS.length - this.residentAvatars.length;
+  readonly residentAvatarLabel = `Residents: ${this.residentAvatars.map(({ name }) => name).join(', ')}, and ${this.hiddenResidentCount} more`;
 
   toggleFacilityMenu(): void {
     this.isFacilityMenuOpen = !this.isFacilityMenuOpen;

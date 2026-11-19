@@ -25,11 +25,13 @@ describe('App', () => {
     expect(compiled.querySelector('.dashboard-heading h1')?.textContent).toContain('Good morning');
   });
 
-  it('should render routed placeholder pages', async () => {
+  it('should render populated reports content', async () => {
     const fixture = TestBed.createComponent(App);
     await TestBed.inject(Router).navigateByUrl('/reports');
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('Reports');
+    expect(compiled.querySelector('.metric-grid')?.textContent).toContain('Reports ready');
+    expect(compiled.textContent).not.toContain('This section is ready for content');
   });
 });

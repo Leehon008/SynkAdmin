@@ -18,19 +18,19 @@ export class QuickActions {
   readonly actions: QuickAction[] = [
     {
       label: 'Med Pass',
-      url: '/emar/23584/med-pass'
+      url: '/emar/1/med-pass'
     },
     {
       label: 'Med Log',
-      url: '/emar/23584/med-log'
+      url: '/emar/1/med-log'
     },
     {
       label: 'Notes',
-      url: '/residents/23584/notes'
+      url: '/residents/1/notes'
     },
     {
       label: 'Tasks & ADLs',
-      url: '/residents/23584/tasks-and-adls'
+      url: '/residents/1/tasks-and-adls'
     }
   ];
 

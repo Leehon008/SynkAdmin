@@ -14,6 +14,7 @@ export const routes: Routes = [
         path: 'facility',
         component: SectionPage,
         data: {
+          pageKey: 'facility',
           title: 'Manage Facility',
           description: 'Facility profile, rooms, staff, and operational settings.',
         },
@@ -23,6 +24,7 @@ export const routes: Routes = [
         pathMatch: 'full',
         component: SectionPage,
         data: {
+          pageKey: 'residents',
           title: 'Residents',
           description: 'Review resident profiles and care information.',
         },
@@ -31,6 +33,7 @@ export const routes: Routes = [
         path: 'residents/:residentId/notes',
         component: SectionPage,
         data: {
+          pageKey: 'residentNotes',
           title: 'Resident Notes',
           description: 'Review and document resident care notes.',
         },
@@ -39,6 +42,7 @@ export const routes: Routes = [
         path: 'residents/:residentId/tasks-and-adls',
         component: SectionPage,
         data: {
+          pageKey: 'residentTasks',
           title: 'Tasks & ADLs',
           description: 'Track daily living activities and care tasks.',
         },
@@ -48,6 +52,7 @@ export const routes: Routes = [
         pathMatch: 'full',
         component: SectionPage,
         data: {
+          pageKey: 'emar',
           title: 'eMar',
           description: 'Medication administration and resident medication records.',
         },
@@ -56,6 +61,7 @@ export const routes: Routes = [
         path: 'emar/:residentId/med-pass',
         component: SectionPage,
         data: {
+          pageKey: 'medPass',
           title: 'Medication Pass',
           description: 'Review and record the next medication pass.',
         },
@@ -64,6 +70,7 @@ export const routes: Routes = [
         path: 'emar/:residentId/med-log',
         component: SectionPage,
         data: {
+          pageKey: 'medLog',
           title: 'Medication Log',
           description: 'Review medication administration history.',
         },
@@ -72,6 +79,7 @@ export const routes: Routes = [
         path: 'tasks',
         component: SectionPage,
         data: {
+          pageKey: 'tasks',
           title: 'Task Manager',
           description: 'Coordinate daily tasks and care team assignments.',
         },
@@ -80,6 +88,7 @@ export const routes: Routes = [
         path: 'form-builder',
         component: SectionPage,
         data: {
+          pageKey: 'formBuilder',
           title: 'Form Builder',
           description: 'Create and manage facility forms.',
         },
@@ -88,6 +97,7 @@ export const routes: Routes = [
         path: 'fax',
         component: SectionPage,
         data: {
+          pageKey: 'fax',
           title: 'Fax',
           description: 'Review incoming and outgoing facility faxes.',
         },
@@ -96,6 +106,7 @@ export const routes: Routes = [
         path: 'reports',
         component: SectionPage,
         data: {
+          pageKey: 'reports',
           title: 'Reports',
           description: 'Explore facility, resident, and care activity reports.',
         },
@@ -104,6 +115,7 @@ export const routes: Routes = [
         path: 'resources',
         component: SectionPage,
         data: {
+          pageKey: 'resources',
           title: 'Resources',
           description: 'Browse tools and information for your care team.',
         },
@@ -112,6 +124,7 @@ export const routes: Routes = [
         path: 'getting-started',
         component: SectionPage,
         data: {
+          pageKey: 'gettingStarted',
           title: 'Get Started',
           description: 'A guide to setting up and using your facility workspace.',
         },
@@ -120,6 +133,7 @@ export const routes: Routes = [
         path: '**',
         component: SectionPage,
         data: {
+          pageKey: 'notFound',
           title: 'Page not found',
           description: 'The page you requested does not exist.',
         },
